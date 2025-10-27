@@ -1,0 +1,10 @@
+node_modules
+.expo
+.next
+dist
+build
+.turbo
+.idea
+.vscode
+coverage
+.expo-shared
