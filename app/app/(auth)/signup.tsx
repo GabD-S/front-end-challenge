@@ -1,15 +1,22 @@
 import { Link, router } from 'expo-router';
 import React from 'react';
-import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
+import { View, Text, TextInput, Button, StyleSheet, ActivityIndicator, Alert } from 'react-native';
+import { useAuth } from '@/src/contexts/AuthContext';
 
 export default function SignUpScreen() {
   const [name, setName] = React.useState('');
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
 
-  const handleSignUp = () => {
-    // TODO: Integrate with API in Phase 2; for now, go back to login for flow demo
-    router.replace('/(auth)/login');
+  const { signUp, signing } = useAuth();
+
+  const handleSignUp = async () => {
+    try {
+      await signUp({ name, email, password });
+      router.replace('/(tabs)');
+    } catch (e: any) {
+      Alert.alert('Erro', e?.message || 'Falha ao cadastrar.');
+    }
   };
 
   return (
@@ -36,7 +43,11 @@ export default function SignUpScreen() {
         value={password}
         onChangeText={setPassword}
       />
-      <Button title="Cadastrar" onPress={handleSignUp} />
+      {signing ? (
+        <ActivityIndicator />
+      ) : (
+        <Button title="Cadastrar" onPress={handleSignUp} />
+      )}
       <View style={{ height: 16 }} />
       <Link href="/(auth)/login">Já tem conta? Entrar</Link>
     </View>

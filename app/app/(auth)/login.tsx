@@ -1,14 +1,21 @@
 import { Link, router } from 'expo-router';
 import React from 'react';
-import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
+import { View, Text, TextInput, Button, StyleSheet, ActivityIndicator, Alert } from 'react-native';
+import { useAuth } from '@/src/contexts/AuthContext';
 
 export default function LoginScreen() {
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
 
-  const handleLogin = () => {
-    // TODO: Integrate with API in Phase 2; for now, navigate to home (tabs)
-    router.replace('/(tabs)');
+  const { signIn, signing } = useAuth();
+
+  const handleLogin = async () => {
+    try {
+      await signIn({ email, password });
+      router.replace('/(tabs)');
+    } catch (e: any) {
+      Alert.alert('Erro', e?.message || 'Falha ao entrar.');
+    }
   };
 
   return (
@@ -29,7 +36,11 @@ export default function LoginScreen() {
         value={password}
         onChangeText={setPassword}
       />
-      <Button title="Entrar" onPress={handleLogin} />
+      {signing ? (
+        <ActivityIndicator />
+      ) : (
+        <Button title="Entrar" onPress={handleLogin} />
+      )}
       <View style={{ height: 16 }} />
       <Link href="/(auth)/signup">Não tem conta? Cadastre-se</Link>
     </View>
