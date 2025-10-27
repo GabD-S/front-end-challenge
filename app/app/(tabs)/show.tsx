@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, ActivityIndicator, Image } from 'react-native';
 import { useLocalSearchParams } from 'expo-router';
@@ -46,7 +47,12 @@ export default function ShowScreen() {
       </View>
       <Text style={styles.title}>{aula.nome}</Text>
       <Text style={styles.professor}>Professor: {aula.professor}</Text>
-      {/* Espaço para mais detalhes no próximo passo */}
+      <Text style={styles.label}>Horário:</Text>
+      <Text style={styles.info}>{aula.horario}</Text>
+      <Text style={styles.label}>Dias da semana:</Text>
+      <Text style={styles.info}>{aula.dias.join(', ')}</Text>
+      <Text style={styles.label}>Descrição:</Text>
+      <Text style={styles.info}>{aula.descricao}</Text>
     </View>
   );
 }
@@ -87,6 +93,18 @@ const styles = StyleSheet.create({
     color: '#bbb',
     fontSize: 16,
     marginBottom: 8,
+  },
+  label: {
+    color: '#fff',
+    fontWeight: 'bold',
+    marginTop: 12,
+    marginBottom: 2,
+    fontSize: 16,
+  },
+  info: {
+    color: '#bbb',
+    fontSize: 15,
+    marginBottom: 2,
   },
   error: {
     color: '#f44336',
