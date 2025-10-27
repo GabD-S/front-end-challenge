@@ -6,7 +6,8 @@ import 'react-native-reanimated';
 import { useColorScheme } from '@/hooks/use-color-scheme';
 
 export const unstable_settings = {
-  anchor: '(tabs)',
+  // During Phase 1, start the app in the auth flow. Later we'll switch based on token presence.
+  anchor: '(auth)',
 };
 
 export default function RootLayout() {

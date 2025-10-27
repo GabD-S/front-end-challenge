@@ -25,6 +25,29 @@ In the output, you'll find options to open the app in a
 
 You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
 
+## Requirements and dependencies
+
+- Recommended Node.js: >= 20.19.4 (required by React Native 0.81.x)
+   - Tip (optional): manage versions with nvm
+- This project already includes the key libraries for navigation and routing:
+   - expo-router
+   - @react-navigation/native, @react-navigation/bottom-tabs
+   - react-native-screens, react-native-safe-area-context
+- Dev tooling:
+   - ESLint + Prettier
+   - Babel with module-resolver (alias "@" → project root)
+
+If you need to (re)install dev tools explicitly:
+
+```bash
+# inside the app/ folder
+npm i -D babel-plugin-module-resolver eslint-import-resolver-typescript
+```
+
+Alias configuration:
+- TypeScript: see `tsconfig.json` (paths `@/*` → `./*`, `src/*`)
+- Babel: see `babel.config.js` (alias `@` → `.`)
+
 ## Get a fresh project
 
 When you're ready, run:

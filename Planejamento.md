@@ -110,17 +110,17 @@ Este é o checklist detalhado que guiará o desenvolvimento do projeto, com o de
 
 Objetivo: Construir a parte visual e a navegação inicial das telas públicas.
 
-- [ ] Instalar e configurar o React Navigation
-- [ ] Criar um Stack Navigator para o fluxo de autenticação
-- [ ] Tela de Login (`LoginScreen`)
-	- [ ] Inputs para email e senha
-	- [ ] Botão “Entrar”
-	- [ ] Link/botão para navegar para “Cadastro”
-- [ ] Tela de Cadastro (`SignUpScreen`)
-	- [ ] Inputs para dados do usuário
-	- [ ] Botão “Cadastrar”
-	- [ ] Link/botão para voltar ao “Login”
-- [ ] Conectar navegação entre Login e Cadastro
+ - [x] Instalar e configurar o React Navigation
+ - [x] Criar um Stack Navigator para o fluxo de autenticação
+ - [x] Tela de Login (`LoginScreen`)
+	- [x] Inputs para email e senha
+	- [x] Botão “Entrar”
+	- [x] Link/botão para navegar para “Cadastro”
+ - [x] Tela de Cadastro (`SignUpScreen`)
+	- [x] Inputs para dados do usuário
+	- [x] Botão “Cadastrar”
+	- [x] Link/botão para voltar ao “Login”
+ - [x] Conectar navegação entre Login e Cadastro
 
 ### Fase 2: Lógica de Autenticação e Contexto
 
