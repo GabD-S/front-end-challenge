@@ -1,4 +1,4 @@
-import { Link, router } from 'expo-router';
+import { router } from 'expo-router';
 import React from 'react';
 import { View, Text, TextInput, Button, StyleSheet, ActivityIndicator, Alert } from 'react-native';
 import { useAuth } from '@/src/contexts/AuthContext';
@@ -42,7 +42,11 @@ export default function LoginScreen() {
         <Button title="Entrar" onPress={handleLogin} />
       )}
       <View style={{ height: 16 }} />
-      <Link href="/(auth)/signup">Não tem conta? Cadastre-se</Link>
+      <Button
+        title="Não tem conta? Cadastre-se"
+        onPress={() => router.push('/(auth)/signup')}
+        accessibilityLabel="Ir para tela de cadastro"
+      />
     </View>
   );
 }
