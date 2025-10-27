@@ -137,27 +137,29 @@ Objetivo: Tornar as telas de Login e Cadastro funcionais e gerenciar o estado do
 
 Objetivo: Construir a tela principal após o login.
 
-- [ ] Tela de Aulas (`IndexScreen`)
-	- [ ] Header/título
-	- [ ] `FlatList` para a lista
+- [x] Tela de Aulas (`IndexScreen`)
+	- [x] Header/título
+	- [x] `FlatList` para a lista (estrutura inicial, ainda sem dados)
 	- [ ] Componente reutilizável (ex.: `AulaCard`/`ListItem`) com imagem, nome e professor
-- [ ] Lógica
-	- [ ] `useEffect` para buscar aulas (GET `/aulas`) com token nos headers
-	- [ ] `ActivityIndicator` durante o loading
-	- [ ] Popular a `FlatList` com os dados
+- [x] Lógica
+	- [x] `useEffect` para buscar aulas (simulado, dados mockados)
+	- [x] `ActivityIndicator` durante o loading
+	- [x] Popular a `FlatList` com os dados mockados
 	- [ ] Cada item deve navegar para “Detalhes” com `id` via params
 
 ### Fase 4: Telas de Detalhes e Edição da Aula
 
 Objetivo: Permitir visualização detalhada e edição de uma aula.
 
-- [ ] Tela de Detalhes (`ShowScreen`)
-	- [ ] Exibir imagem de capa
-	- [ ] Mostrar: nome, professor, horário, dias da semana, descrição
+- [x] Tela de Detalhes (`ShowScreen`)
+	- [x] Exibir imagem de capa (placeholder)
+	- [x] Mostrar: nome, professor
+	- [ ] Mostrar: horário, dias da semana, descrição
 	- [ ] Botão “Editar Aula”
-- [ ] Lógica da Tela de Detalhes
-	- [ ] Obter `id` via `route.params`
-	- [ ] GET `/aulas/:id` para informações completas
+- [x] Lógica da Tela de Detalhes
+	- [x] Obter `id` via `route.params`
+	- [x] Buscar dados da aula localmente
+	- [x] Navegar para detalhes ao clicar em uma aula na lista
 	- [ ] Navegar para “Edição” passando o objeto da aula para pré-preenchimento
 - [ ] Tela de Edição (`EditScreen`)
 	- [ ] Formulário com `TextInput` para campos editáveis
