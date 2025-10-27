@@ -1,30 +1,25 @@
-import React from 'react';
-import { View, Text, FlatList, StyleSheet, SafeAreaView, ActivityIndicator } from 'react-native';
 
-  // Estado para loading e dados mockados
-  const [loading, setLoading] = React.useState(true);
-  const [aulas, setAulas] = React.useState([
-    {
-      id: '1',
-      nome: 'Musculação',
-      professor: 'João Silva',
-    },
-    {
-      id: '2',
-      nome: 'Yoga',
-      professor: 'Maria Souza',
-    },
-    {
-      id: '3',
-      nome: 'Pilates',
-      professor: 'Carlos Lima',
-    },
-  ]);
+import React, { useState, useEffect } from 'react';
+import { View, Text, FlatList, StyleSheet, SafeAreaView, ActivityIndicator, TouchableOpacity } from 'react-native';
+import { useRouter } from 'expo-router';
+import { getAulas, Aula } from '@/src/services/api';
 
-  React.useEffect(() => {
-    // Simula loading inicial
-    const timer = setTimeout(() => setLoading(false), 1200);
-    return () => clearTimeout(timer);
+export default function IndexScreen() {
+  const [loading, setLoading] = useState(true);
+  const [aulas, setAulas] = useState<Aula[]>([]);
+  const router = useRouter();
+
+  useEffect(() => {
+    (async () => {
+      setLoading(true);
+      try {
+        const data = await getAulas();
+        setAulas(data);
+      } catch (e) {
+        setAulas([]);
+      }
+      setLoading(false);
+    })();
   }, []);
 
   return (
@@ -39,10 +34,13 @@ import { View, Text, FlatList, StyleSheet, SafeAreaView, ActivityIndicator } fro
           data={aulas}
           keyExtractor={item => item.id}
           renderItem={({ item }) => (
-            <View style={styles.card}>
+            <TouchableOpacity
+              style={styles.card}
+              onPress={() => router.push({ pathname: '/(tabs)/show', params: { id: item.id } })}
+            >
               <Text style={styles.nome}>{item.nome}</Text>
               <Text style={styles.professor}>Professor: {item.professor}</Text>
-            </View>
+            </TouchableOpacity>
           )}
           ListEmptyComponent={<Text style={styles.empty}>Nenhuma aula encontrada.</Text>}
           contentContainerStyle={{ flexGrow: 1 }}
