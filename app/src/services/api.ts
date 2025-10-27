@@ -37,11 +37,11 @@ export type SignUpPayload = {
 
 // Adjust endpoints according to your backend contract
 export async function signInRequest(data: SignInPayload): Promise<AuthResponse> {
-  const res = await api.post<AuthResponse>('/auth/login', data);
+  const res = await api.post<AuthResponse>('/login', data);
   return res.data;
 }
 
 export async function signUpRequest(data: SignUpPayload): Promise<AuthResponse> {
-  const res = await api.post<AuthResponse>('/auth/register', data);
+  const res = await api.post<AuthResponse>('/users', data);
   return res.data;
 }
