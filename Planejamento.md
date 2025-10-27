@@ -126,12 +126,12 @@ Objetivo: Construir a parte visual e a navegação inicial das telas públicas.
 
 Objetivo: Tornar as telas de Login e Cadastro funcionais e gerenciar o estado do usuário.
 
-- [ ] Criar serviço de API (`src/services/api.ts|js`) com Axios e `baseURL`
-- [ ] Implementar `handleLogin` e `handleSignUp` (POST `/login`, POST `/users`)
-- [ ] Conectar as funções aos botões “Entrar” e “Cadastrar”
-- [ ] Salvar token com AsyncStorage após login
-- [ ] Criar `AuthContext` para estado global (token, usuário, loading)
-- [ ] Implementar Navegação Protegida: verificar token no início e direcionar para Home ou Login
+- [x] Criar serviço de API (`src/services/api.ts`) com Axios e `baseURL` (padrão: `https://gym.switchdreams.com.br/`, sobrescrevível via `EXPO_PUBLIC_API_URL`)
+- [x] Implementar `handleLogin` e `handleSignUp` (endpoints configuráveis; por padrão `/auth/login` e `/auth/register`)
+- [x] Conectar as funções aos botões “Entrar” e “Cadastrar”
+- [x] Salvar token com AsyncStorage após login
+- [x] Criar `AuthContext` para estado global (token, usuário, loading)
+- [x] Implementar Navegação Protegida: verificação inicial do token com loader e redirecionamento automático (Login ↔ Home)
 
 ### Fase 3: Tela de Listagem de Aulas (Index)
 
