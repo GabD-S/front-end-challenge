@@ -104,7 +104,7 @@ Este é o checklist detalhado que guiará o desenvolvimento do projeto, com o de
 - [x] Fazer o fork do repositório oficial
 - [x] Iniciar um novo projeto Expo (`npx create-expo-app`) — criado em `app/` dentro do repositório
 - [x] (Diferencial) Configurar ESLint, Prettier e EditorConfig — `.eslintrc.js`, `.prettierrc`, `.prettierignore`, `.eslintignore`, `.editorconfig` adicionados em `app/`
-- [ ] Criar estrutura de pastas (ex.: `src/screens`, `src/components`, `src/services`, `src/navigation`, `src/contexts`)
+- [x] Criar estrutura de pastas (ex.: `src/screens`, `src/components`, `src/services`, `src/navigation`, `src/contexts`) — criadas em `app/src/*`
 
 ### Fase 1: Telas de Autenticação (UI e Navegação)
 
