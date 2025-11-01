@@ -5,7 +5,6 @@ import {
   SignInPayload,
   SignUpPayload,
   User,
-  setAuthToken,
   signInRequest,
   signUpRequest,
 } from '@/src/services/api';
@@ -41,7 +40,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         ]);
         if (storedToken) {
           setToken(storedToken);
-          setAuthToken(storedToken);
         }
         if (storedUser) {
           setUser(JSON.parse(storedUser));
@@ -55,7 +53,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const persistAuth = useCallback(async (data: AuthResponse) => {
     setToken(data.token);
     setUser(data.user);
-    setAuthToken(data.token);
     await AsyncStorage.multiSet([
       [TOKEN_KEY, data.token],
       [USER_KEY, JSON.stringify(data.user)],
@@ -85,7 +82,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const signOut = useCallback(async () => {
     setToken(null);
     setUser(null);
-    setAuthToken(undefined);
     await AsyncStorage.multiRemove([TOKEN_KEY, USER_KEY]);
   }, []);
 
