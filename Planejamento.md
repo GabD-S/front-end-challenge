@@ -33,28 +33,28 @@ O objetivo é consumir uma API RESTful fornecida para criar uma interface de usu
 
 ## 🚀 Funcionalidades Implementadas
 
-- [ ] Sistema de Autenticação
-	- Cadastro de novos usuários (POST `/users`)
-	- Login de usuários (POST `/login`)
-	- Gerenciamento de token JWT (salvar no AsyncStorage e enviar nos headers)
-- [ ] Navegação Protegida
+- [x] Sistema de Autenticação
+	- Cadastro de novos usuários (mock local via AsyncStorage)
+	- Login de usuários (mock local via AsyncStorage)
+	- Gerenciamento de token (AsyncStorage)
+- [x] Navegação Protegida
 	- Rotas públicas (Login, Cadastro) e privadas (App)
 	- Redirecionamento automático para Home se houver token válido
-- [ ] Gerenciamento de Aulas
-	- Listagem de todas as aulas (GET `/aulas`)
-	- Detalhes de uma aula (GET `/aulas/:id`)
-	- Edição de aula (PUT `/aulas/:id`)
-- [ ] Feedback ao Usuário
-	- Indicadores de loading durante chamadas de API
+- [x] Gerenciamento de Aulas
+	- Listagem de todas as aulas (mock local via AsyncStorage)
+	- Detalhes de uma aula (mock local via AsyncStorage)
+	- Edição de aula (mock local via AsyncStorage)
+- [x] Feedback ao Usuário
+	- Indicadores de loading durante operações locais
 	- Exibição de mensagens de erro (ex.: “Usuário ou senha inválidos”)
 
 ## 📱 Telas Desenvolvidas
 
-- [ ] Tela de Cadastro (SignUp)
-- [ ] Tela de Login (Login)
-- [ ] Tela de Aulas (Index / Home)
-- [ ] Tela de Detalhes da Aula (Show)
-- [ ] Tela de Edição da Aula (Edit)
+- [x] Tela de Cadastro (SignUp)
+- [x] Tela de Login (Login)
+- [x] Tela de Aulas (Index / Home)
+- [x] Tela de Detalhes da Aula (Show)
+- [x] Tela de Edição da Aula (Edit)
 
 ## 🔗 Informações da API
 
@@ -126,46 +126,47 @@ Objetivo: Construir a parte visual e a navegação inicial das telas públicas.
 
 Objetivo: Tornar as telas de Login e Cadastro funcionais e gerenciar o estado do usuário.
 
-- [ ] Criar serviço de API (`src/services/api.ts|js`) com Axios e `baseURL`
-- [ ] Implementar `handleLogin` e `handleSignUp` (POST `/login`, POST `/users`)
-- [ ] Conectar as funções aos botões “Entrar” e “Cadastrar”
-- [ ] Salvar token com AsyncStorage após login
-- [ ] Criar `AuthContext` para estado global (token, usuário, loading)
-- [ ] Implementar Navegação Protegida: verificar token no início e direcionar para Home ou Login
+- [x] Criar serviço de API (`src/services/api.ts`) com Axios e `baseURL` (padrão: `https://gym.switchdreams.com.br/`, sobrescrevível via `EXPO_PUBLIC_API_URL`)
+- [x] Implementar `handleLogin` e `handleSignUp` (endpoints configuráveis; por padrão `/auth/login` e `/auth/register`)
+- [x] Conectar as funções aos botões “Entrar” e “Cadastrar”
+- [x] Salvar token com AsyncStorage após login
+- [x] Criar `AuthContext` para estado global (token, usuário, loading)
+- [x] Implementar Navegação Protegida: verificação inicial do token com loader e redirecionamento automático (Login ↔ Home)
 
 ### Fase 3: Tela de Listagem de Aulas (Index)
 
 Objetivo: Construir a tela principal após o login.
 
-- [ ] Tela de Aulas (`IndexScreen`)
-	- [ ] Header/título
-	- [ ] `FlatList` para a lista
-	- [ ] Componente reutilizável (ex.: `AulaCard`/`ListItem`) com imagem, nome e professor
-- [ ] Lógica
-	- [ ] `useEffect` para buscar aulas (GET `/aulas`) com token nos headers
-	- [ ] `ActivityIndicator` durante o loading
-	- [ ] Popular a `FlatList` com os dados
-	- [ ] Cada item deve navegar para “Detalhes” com `id` via params
+ - [x] Tela de Aulas (`IndexScreen`)
+	 - [x] Header/título
+	 - [x] `FlatList` para a lista (com dados mockados)
+	 - [x] Componente reutilizável (`ListItem`) com nome e professor
+ - [x] Lógica
+	 - [x] `useEffect` para buscar aulas (mock local)
+	 - [x] `ActivityIndicator` durante o loading
+	 - [x] Popular a `FlatList` com os dados mockados
+	 - [x] Cada item navega para “Detalhes” com `id` via params
 
 ### Fase 4: Telas de Detalhes e Edição da Aula
 
 Objetivo: Permitir visualização detalhada e edição de uma aula.
 
-- [ ] Tela de Detalhes (`ShowScreen`)
-	- [ ] Exibir imagem de capa
-	- [ ] Mostrar: nome, professor, horário, dias da semana, descrição
-	- [ ] Botão “Editar Aula”
-- [ ] Lógica da Tela de Detalhes
-	- [ ] Obter `id` via `route.params`
-	- [ ] GET `/aulas/:id` para informações completas
-	- [ ] Navegar para “Edição” passando o objeto da aula para pré-preenchimento
-- [ ] Tela de Edição (`EditScreen`)
-	- [ ] Formulário com `TextInput` para campos editáveis
-	- [ ] Botão “Salvar Alterações”
-- [ ] Lógica da Tela de Edição
-	- [ ] Receber dados via `route.params`
-	- [ ] `handleUpdate` com PUT `/aulas/:id`
-	- [ ] Voltar para “Detalhes” após sucesso
+- [x] Tela de Detalhes (`ShowScreen`)
+	- [x] Exibir imagem de capa (placeholder)
+	- [x] Mostrar: nome, professor, horário, dias da semana, descrição
+	- [x] Botão “Editar Aula”
+- [x] Lógica da Tela de Detalhes
+	- [x] Obter `id` via `route.params`
+	- [x] Buscar dados da aula localmente
+	- [x] Navegar para detalhes ao clicar em uma aula na lista
+	- [x] Navegar para “Edição” passando o objeto da aula para pré-preenchimento
+- [x] Tela de Edição (`EditScreen`)
+	- [x] Formulário com `TextInput` para campos editáveis
+	- [x] Botão “Salvar Alterações”
+- [x] Lógica da Tela de Edição
+	- [x] Receber dados via `route.params`
+	- [x] Atualizar aula localmente (AsyncStorage)
+	- [x] Voltar para “Detalhes” após sucesso
 
 ### Fase 5: Finalização e Entrega
 

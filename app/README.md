@@ -36,6 +36,9 @@ You can start developing by editing the files inside the **app** directory. This
 - Dev tooling:
    - ESLint + Prettier
    - Babel with module-resolver (alias "@" → project root)
+ - Auth & data:
+   - axios (HTTP client)
+   - @react-native-async-storage/async-storage (persistência do token)
 
 If you need to (re)install dev tools explicitly:
 
@@ -47,6 +50,23 @@ npm i -D babel-plugin-module-resolver eslint-import-resolver-typescript
 Alias configuration:
 - TypeScript: see `tsconfig.json` (paths `@/*` → `./*`, `src/*`)
 - Babel: see `babel.config.js` (alias `@` → `.`)
+
+## API base URL
+
+The app reads the API base URL from `EXPO_PUBLIC_API_URL` when available. Default:
+
+```
+https://gym.switchdreams.com.br/
+```
+
+You can set it in an `.env` or in `app.config.ts`:
+
+```bash
+# .env
+EXPO_PUBLIC_API_URL=https://your-api.example.com
+```
+
+Auth endpoints are configurable in `src/services/api.ts` (defaults: `/auth/login`, `/auth/register`).
 
 ## Get a fresh project
 
