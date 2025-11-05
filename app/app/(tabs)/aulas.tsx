@@ -5,7 +5,7 @@ import { BlurView } from 'expo-blur';
 import { Aula, getAulas, enrollInAula, unenrollFromAula, deleteAula } from '@/src/services/api';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useAuth } from '@/src/contexts/AuthContext';
-import styles from './aulas.styles';
+import styles from '@/src/styles/tabs/aulas.styles';
 
 export default function AulasScreen() {
   const [aulas, setAulas] = useState<Aula[]>([]);
@@ -85,7 +85,7 @@ export default function AulasScreen() {
           <Text style={styles.title}>Aulas Disponíveis</Text>
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             {(user?.role === 'admin' || user?.role === 'professor') && (
-              <Pressable onPress={() => router.push('/(tabs)/create')} style={{ marginRight: 12 }}>
+              <Pressable onPress={() => router.push('/create' as any)} style={{ marginRight: 12 }}>
                 <Text style={[styles.back, { color: '#22c55e', fontWeight: 'bold' }]}>＋ Criar Aula</Text>
               </Pressable>
             )}
@@ -142,7 +142,7 @@ export default function AulasScreen() {
                       )
                     ) : (
                       <View style={{ flexDirection: 'row' }}>
-                        <Pressable style={[styles.button, { backgroundColor: '#2dd4bf', marginRight: 8 }]} onPress={() => router.push({ pathname: '/(tabs)/edit', params: { id: item.id } })}>
+                        <Pressable style={[styles.button, { backgroundColor: '#2dd4bf', marginRight: 8 }]} onPress={() => router.push({ pathname: '/edit', params: { id: item.id } } as any)}>
                           <Text style={styles.buttonText}>Editar</Text>
                         </Pressable>
                         <Pressable style={[styles.button, { backgroundColor: '#ef4444' }]} onPress={() => handleRemover(item.id)}>
@@ -150,7 +150,7 @@ export default function AulasScreen() {
                         </Pressable>
                       </View>
                     )}
-                    <Pressable onPress={() => router.push({ pathname: '/(tabs)/show', params: { id: item.id } })}>
+                    <Pressable onPress={() => router.push({ pathname: '/show', params: { id: item.id } } as any)}>
                       <Text style={styles.link}>Ver detalhes →</Text>
                     </Pressable>
                   </View>

@@ -6,7 +6,7 @@ import Input from '@/src/components/Input';
 import Button from '@/src/components/Button';
 import { LinearGradient } from 'expo-linear-gradient';
 import { BlurView } from 'expo-blur';
-import styles from './login.styles';
+import styles from '@/src/styles/auth/login.styles';
 
 const { width, height } = Dimensions.get('window');
 
@@ -102,7 +102,7 @@ export default function LoginScreen() {
       await signIn({ email, password });
       setEmail('');
       setPassword('');
-      router.replace('/(tabs)');
+  router.replace('/');
     } catch (e: any) {
       const apiMsg = e?.message;
       setError(apiMsg || 'E-mail não encontrado ou inválido.');

@@ -7,7 +7,7 @@ import Button from '@/src/components/Button';
 import { useAuth } from '@/src/contexts/AuthContext';
 import { LinearGradient } from 'expo-linear-gradient';
 import { BlurView } from 'expo-blur';
-import styles from './create.styles';
+import styles from '@/src/styles/tabs/create.styles';
 
 export default function CreateAulaScreen() {
   const router = useRouter();
@@ -30,7 +30,7 @@ export default function CreateAulaScreen() {
     const allowed = user.role === 'professor' || user.role === 'admin';
     if (!allowed) {
       Alert.alert('Acesso negado', 'Apenas professores e administradores podem criar aulas.', [
-        { text: 'OK', onPress: () => router.replace('/(tabs)') },
+  { text: 'OK', onPress: () => router.replace('/' as any) },
       ]);
     }
     if (!professor && user?.role === 'professor') {
@@ -58,7 +58,7 @@ export default function CreateAulaScreen() {
       };
       await createAula(payload);
       // Volta para Home; ela recarrega automaticamente ao focar
-      router.replace('/(tabs)' as any);
+  router.replace('/' as any);
     } catch (e: any) {
       setError(e.message || 'Erro ao criar aula.');
     } finally {

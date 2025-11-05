@@ -2,7 +2,7 @@ import React, { useRef, useEffect } from 'react';
 import { View, Text, ScrollView, SafeAreaView, Animated, Pressable } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { BlurView } from 'expo-blur';
-import styles from './explore.styles';
+import styles from '@/src/styles/tabs/explore.styles';
 
 export default function ExploreScreen() {
   const fadeAnim = useRef(new Animated.Value(0)).current;

@@ -4,7 +4,7 @@ import { useRouter } from 'expo-router';
 import { useFocusEffect } from '@react-navigation/native';
 import { useAuth } from '@/src/contexts/AuthContext';
 import { Aula as ApiAula, getAulas as getAulasAPI, enrollInAula as enrollAula, unenrollFromAula as unenrollAula, addFeedback, getFeedbacks, Feedback, deleteAula } from '@/src/services/api';
-import styles from './index.styles';
+import styles from '@/src/styles/tabs/index.styles';
 
 type Categoria = 'yoga' | 'crossfit' | 'pilates' | 'hiit' | 'musculacao';
 
@@ -172,9 +172,9 @@ export default function IndexScreen() {
           ) : (
             <View style={styles.navActions}>
               <Pressable style={[styles.loginButton, { backgroundColor: Palette.mint, marginRight: 8 }]} onPress={() => {
-                if ((user as any)?.role === 'admin') router.push('/(tabs)/admin');
-                else if ((user as any)?.role === 'professor') router.push('/(tabs)/professor');
-                else router.push('/(tabs)/explore');
+                if ((user as any)?.role === 'admin') router.push('/admin' as any);
+                else if ((user as any)?.role === 'professor') router.push('/professor' as any);
+                else router.push('/explore' as any);
               }}>
                 <Text style={styles.loginButtonText}>Perfil</Text>
               </Pressable>
@@ -197,7 +197,7 @@ export default function IndexScreen() {
               <Text style={styles.heroTitle}>{`Transforme seu corpo,
 Eleve sua mente`}</Text>
               <Text style={styles.heroSubtitle}>Treinamento profissional com resultados comprovados</Text>
-              <Pressable style={styles.ctaButton} onPress={() => router.push('/(tabs)/aulas')}>
+              <Pressable style={styles.ctaButton} onPress={() => router.push('/aulas' as any)}>
                 <Text style={styles.ctaButtonText}>Começar Jornada 🚀</Text>
               </Pressable>
             </View>
@@ -227,11 +227,11 @@ Eleve sua mente`}</Text>
               </View>
               <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                 {(user?.role === 'admin' || user?.role === 'professor') && (
-                  <Pressable style={[styles.seeAllButton, { marginRight: 8 }]} onPress={() => router.push('/(tabs)/create')}>
+                  <Pressable style={[styles.seeAllButton, { marginRight: 8 }]} onPress={() => router.push('/create' as any)}>
                     <Text style={[styles.seeAllText, { color: Palette.bright }]}>＋ Criar Aula</Text>
                   </Pressable>
                 )}
-                <Pressable style={styles.seeAllButton} onPress={() => router.push('/(tabs)/aulas')}>
+                <Pressable style={styles.seeAllButton} onPress={() => router.push('/aulas' as any)}>
                   <Text style={styles.seeAllText}>Ver todas →</Text>
                 </Pressable>
               </View>
@@ -260,7 +260,7 @@ Eleve sua mente`}</Text>
                     enrolled && styles.classCardEnrolled,
                   ]}
                 >
-                  <Pressable onPress={() => router.push({ pathname: '/(tabs)/show', params: { id: item.id } })}>
+                  <Pressable onPress={() => router.push({ pathname: '/show' as any, params: { id: item.id } })}>
                     <View style={[styles.classCardHeader, { backgroundColor: enrolled ? '#059669' : categoryColors[cat] }]}> 
                       <Text style={styles.classIcon}>{enrolled ? '✅' : categoryIcons[cat]}</Text>
                       <View style={styles.levelBadge}>
@@ -269,7 +269,7 @@ Eleve sua mente`}</Text>
                     </View>
                   </Pressable>
                   <View style={styles.classCardBody}>
-                    <Pressable onPress={() => router.push({ pathname: '/(tabs)/show', params: { id: item.id } })}>
+                    <Pressable onPress={() => router.push({ pathname: '/show' as any, params: { id: item.id } })}>
                       <Text style={styles.className}>{item.nome}</Text>
                       <Text style={styles.classProfessor}>👨‍🏫 {item.professor}</Text>
                       <View style={styles.classInfo}>
@@ -317,7 +317,7 @@ Eleve sua mente`}</Text>
                           onPress={(e) => {
                             // @ts-ignore
                             e?.stopPropagation?.();
-                            router.push({ pathname: '/(tabs)/edit', params: { id: item.id } });
+                            router.push({ pathname: '/edit' as any, params: { id: item.id } });
                           }}
                         >
                           <Text style={styles.reserveButtonText}>Editar</Text>
@@ -368,7 +368,7 @@ Eleve sua mente`}</Text>
                     hovered && styles.cardHover,
                     pressed && { transform: [{ scale: 0.98 }] },
                   ]}
-                  onPress={() => router.push({ pathname: '/(tabs)/aulas', params: { categoria: item.name.toLowerCase().normalize('NFD').replace(/\p{Diacritic}/gu, '') } })}
+                  onPress={() => router.push({ pathname: '/aulas' as any, params: { categoria: item.name.toLowerCase().normalize('NFD').replace(/\p{Diacritic}/gu, '') } })}
                 >
                   <Image source={{ uri: item.image }} style={styles.sportImage} />
                   <View style={styles.sportOverlay}>
@@ -387,7 +387,7 @@ Eleve sua mente`}</Text>
                         </View>
                       ))}
                     </View>
-                    <Pressable style={[styles.exploreSportButton, { backgroundColor: item.color }]} onPress={() => router.push({ pathname: '/(tabs)/aulas', params: { categoria: item.name.toLowerCase().normalize('NFD').replace(/\p{Diacritic}/gu, '') } })}> 
+                    <Pressable style={[styles.exploreSportButton, { backgroundColor: item.color }]} onPress={() => router.push({ pathname: '/aulas' as any, params: { categoria: item.name.toLowerCase().normalize('NFD').replace(/\p{Diacritic}/gu, '') } })}> 
                       <Text style={styles.exploreSportText}>Explorar Modalidade</Text>
                     </Pressable>
                   </View>
@@ -520,7 +520,7 @@ Eleve sua mente`}</Text>
             <Text style={styles.finalCTASubtitle}>
               Agende uma aula experimental gratuita e conheça nossa estrutura
             </Text>
-            <Pressable style={styles.finalCTAButton} onPress={() => router.push('/(tabs)/aulas')}>
+            <Pressable style={styles.finalCTAButton} onPress={() => router.push('/aulas' as any)}>
               <Text style={styles.finalCTAButtonText}>Agendar Aula Grátis 🎁</Text>
             </Pressable>
           </View>

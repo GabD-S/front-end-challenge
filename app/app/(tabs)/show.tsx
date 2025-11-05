@@ -8,7 +8,7 @@ import { getAulas, Aula, enrollInAula, getAulaById, deleteAula } from '@/src/ser
 import { useAuth } from '@/src/contexts/AuthContext';
 import { LinearGradient } from 'expo-linear-gradient';
 import { BlurView } from 'expo-blur';
-import styles from './show.styles';
+import styles from '@/src/styles/tabs/show.styles';
 
 export default function ShowScreen() {
   const { id } = useLocalSearchParams();
@@ -180,7 +180,7 @@ export default function ShowScreen() {
                         styles.editButtonContainer,
                         { transform: [{ scale: pressed ? 0.95 : 1 }] },
                       ]}
-                      onPress={() => router.push({ pathname: '/(tabs)/edit', params: { id: aula.id } })}
+                      onPress={() => router.push({ pathname: '/edit' as any, params: { id: aula.id } })}
                     >
                       <LinearGradient
                         colors={['#2dd4bf', '#14b8a6']}
@@ -204,7 +204,7 @@ export default function ShowScreen() {
                             style: 'destructive',
                             onPress: async () => {
                               await deleteAula(String(aula.id));
-                              router.replace('/(tabs)' as any);
+                              router.replace('/' as any);
                             },
                           },
                         ]);

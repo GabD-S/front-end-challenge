@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, SafeAreaView } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
-import styles from './professor.styles';
+import styles from '@/src/styles/tabs/professor.styles';
 
 export default function ProfessorScreen() {
   return (

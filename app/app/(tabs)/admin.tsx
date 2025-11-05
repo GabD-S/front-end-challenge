@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, SafeAreaView } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
-import styles from './admin.styles';
+import styles from '@/src/styles/tabs/admin.styles';
 
 export default function AdminScreen() {
   return (

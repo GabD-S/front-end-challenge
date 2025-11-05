@@ -7,7 +7,7 @@ import { Colors } from '@/constants/theme';
 import { useColorScheme } from '@/hooks/use-color-scheme';
 import { View, Pressable, Text } from 'react-native';
 import { useAuth } from '@/src/contexts/AuthContext';
-import styles from './layout.styles';
+import styles from '@/src/styles/tabs/layout.styles';
 
 function TopNav() {
   const colorScheme = useColorScheme();
@@ -16,11 +16,11 @@ function TopNav() {
   const { user } = useAuth();
 
   const items = [
-    { id: 'index', title: 'Home', icon: 'house.fill', href: '/(tabs)' },
-    { id: 'aulas', title: 'Aulas', icon: 'calendar', href: '/(tabs)/aulas' },
-    { id: 'explore', title: 'Explore', icon: 'paperplane.fill', href: '/(tabs)/explore' },
-    { id: 'professor', title: 'Professor', icon: 'person.fill', href: '/(tabs)/professor' },
-    { id: 'admin', title: 'Admin', icon: 'gear', href: '/(tabs)/admin' },
+    { id: 'index', title: 'Home', icon: 'house.fill', href: '/' },
+    { id: 'aulas', title: 'Aulas', icon: 'calendar', href: '/aulas' },
+    { id: 'explore', title: 'Explore', icon: 'paperplane.fill', href: '/explore' },
+    { id: 'professor', title: 'Professor', icon: 'person.fill', href: '/professor' },
+    { id: 'admin', title: 'Admin', icon: 'gear', href: '/admin' },
   ];
 
   return (
@@ -28,7 +28,7 @@ function TopNav() {
       <Text style={styles.logo}>💪 FitPro Elite</Text>
       <View style={styles.tabsRow}>
         {items.map((it) => {
-          const active = pathname === it.href || pathname === '/(tabs)' && it.id === 'index';
+          const active = pathname === it.href || (pathname === '/' && it.id === 'index');
           // Opcional: manter Professor/Admin sempre visíveis; se quiser ocultar por papel use user?.role
           return (
             <Pressable key={it.id} onPress={() => router.push(it.href as any)} style={styles.tabBtn}>
@@ -39,7 +39,7 @@ function TopNav() {
         })}
       </View>
       {(user?.role === 'admin' || user?.role === 'professor') ? (
-        <Pressable onPress={() => router.push('/(tabs)/create' as any)} style={styles.createBtn}>
+  <Pressable onPress={() => router.push('/create' as any)} style={styles.createBtn}>
           <Text style={styles.createBtnText}>＋ Criar Aula</Text>
         </Pressable>
       ) : (

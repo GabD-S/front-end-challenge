@@ -6,7 +6,7 @@ import Input from '@/src/components/Input';
 import Button from '@/src/components/Button';
 import { LinearGradient } from 'expo-linear-gradient';
 import { BlurView } from 'expo-blur';
-import styles from './signup.styles';
+import styles from '@/src/styles/auth/signup.styles';
 
 const { width, height } = Dimensions.get('window');
 

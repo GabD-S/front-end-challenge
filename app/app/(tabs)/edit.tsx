@@ -8,7 +8,7 @@ import Button from '@/src/components/Button';
 import { useAuth } from '@/src/contexts/AuthContext';
 import { LinearGradient } from 'expo-linear-gradient';
 import { BlurView } from 'expo-blur';
-import styles from './edit.styles';
+import styles from '@/src/styles/tabs/edit.styles';
 
 export default function EditScreen() {
   const { id } = useLocalSearchParams();
@@ -22,7 +22,7 @@ export default function EditScreen() {
     const allowed = user.role === 'professor' || user.role === 'admin';
     if (!allowed) {
       Alert.alert('Acesso negado', 'Apenas professores e administradores podem editar aulas.', [
-        { text: 'OK', onPress: () => router.replace({ pathname: '/(tabs)/show', params: { id } }) },
+  { text: 'OK', onPress: () => router.replace({ pathname: '/show' as any, params: { id } }) },
       ]);
     }
   }, [user, id]);
@@ -91,7 +91,7 @@ export default function EditScreen() {
         descricao,
       };
       await AsyncStorage.setItem('MOCK_AULAS', JSON.stringify(aulas));
-      router.replace({ pathname: '/(tabs)/show', params: { id } });
+  router.replace({ pathname: '/show' as any, params: { id } });
     } catch (e: any) {
       setError(e.message || 'Erro ao salvar.');
     }

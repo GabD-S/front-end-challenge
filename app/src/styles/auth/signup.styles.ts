@@ -27,7 +27,7 @@ export default StyleSheet.create({
   circle3: {
     width: 200,
     height: 200,
-    top: 0, // computed in-screen
+    top: 0,
     right: -50,
   },
   circleGradient: {
