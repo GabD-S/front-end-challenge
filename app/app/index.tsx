@@ -2,7 +2,7 @@ import { Redirect } from 'expo-router';
 import { useAuth } from '@/src/contexts/AuthContext';
 import { ActivityIndicator, View } from 'react-native';
 
-// Default entry: send users to the auth flow during Phase 1
+// Entry route: avoid redirecting '/' to itself to prevent loops
 export default function Index() {
   const { token, loading } = useAuth();
 
@@ -14,9 +14,7 @@ export default function Index() {
     );
   }
 
-  if (token) {
-  return <Redirect href="/" />;
-  }
-
+  // If logged in, land on Aulas; otherwise go to Login
+  if (token) return <Redirect href="/aulas" />;
   return <Redirect href="/login" />;
 }
