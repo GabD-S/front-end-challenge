@@ -7,7 +7,7 @@ import { Colors } from '@/constants/theme';
 import { useColorScheme } from '@/hooks/use-color-scheme';
 import { View, Pressable, Text } from 'react-native';
 import { useAuth } from '@/src/contexts/AuthContext';
-import styles from './_layout.styles';
+import styles from './layout.styles';
 
 function TopNav() {
   const colorScheme = useColorScheme();
