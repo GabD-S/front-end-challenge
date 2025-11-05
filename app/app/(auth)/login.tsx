@@ -1,11 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { View, Text, StyleSheet, ActivityIndicator, Animated, Dimensions, TouchableOpacity } from 'react-native';
+import { View, Text, ActivityIndicator, Animated, Dimensions, TouchableOpacity } from 'react-native';
 import { useRouter } from 'expo-router';
 import { useAuth } from '@/src/contexts/AuthContext';
 import Input from '@/src/components/Input';
 import Button from '@/src/components/Button';
 import { LinearGradient } from 'expo-linear-gradient';
 import { BlurView } from 'expo-blur';
+import styles from './login.styles';
 
 const { width, height } = Dimensions.get('window');
 
@@ -144,6 +145,7 @@ export default function LoginScreen() {
         style={[
           styles.floatingCircle,
           styles.circle3,
+          { top: height / 2 - 100 },
           { transform: [{ translateY: floatAnim3 }] },
         ]}
       >
@@ -284,166 +286,4 @@ export default function LoginScreen() {
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: 24,
-  },
-  floatingCircle: {
-    position: 'absolute',
-    borderRadius: 1000,
-    zIndex: -1, // Ensure decorative elements are behind interactive elements
-  },
-  circle1: {
-    width: 300,
-    height: 300,
-    top: -100,
-    right: -100,
-  },
-  circle2: {
-    width: 250,
-    height: 250,
-    bottom: -80,
-    left: -80,
-  },
-  circle3: {
-    width: 200,
-    height: 200,
-    top: height / 2 - 100,
-    left: -50,
-  },
-  circleGradient: {
-    flex: 1,
-    borderRadius: 1000,
-  },
-  card: {
-    width: '100%',
-    maxWidth: 400,
-    borderRadius: 30,
-    overflow: 'hidden',
-    shadowColor: '#7c3aed',
-    shadowOffset: { width: 0, height: 20 },
-    shadowOpacity: 0.4,
-    shadowRadius: 30,
-    elevation: 15,
-  },
-  blurContainer: {
-    borderRadius: 30,
-    overflow: 'hidden',
-  },
-  cardGradient: {
-    padding: 32,
-    borderWidth: 1,
-    borderColor: 'rgba(255, 255, 255, 0.1)',
-    borderRadius: 30,
-  },
-  titleContainer: {
-    paddingVertical: 12,
-    paddingHorizontal: 24,
-    borderRadius: 20,
-    alignSelf: 'center',
-    marginBottom: 12,
-    shadowColor: '#7c3aed',
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.5,
-    shadowRadius: 8,
-    elevation: 8,
-  },
-  title: {
-    fontSize: 28,
-    fontWeight: 'bold',
-    color: '#fff',
-    textAlign: 'center',
-    letterSpacing: 1,
-  },
-  decorativeLine: {
-    height: 2,
-    marginVertical: 24,
-  },
-  lineGradient: {
-    flex: 1,
-  },
-  inputContainer: {
-    gap: 16,
-    marginBottom: 20,
-  },
-  errorContainer: {
-    marginBottom: 16,
-    borderRadius: 12,
-    overflow: 'hidden',
-  },
-  errorGradient: {
-    padding: 12,
-    borderWidth: 1,
-    borderColor: 'rgba(239, 68, 68, 0.3)',
-    borderRadius: 12,
-  },
-  error: {
-    color: '#fca5a5',
-    textAlign: 'center',
-    fontSize: 14,
-    fontWeight: '600',
-  },
-  loaderContainer: {
-    alignItems: 'center',
-    paddingVertical: 20,
-  },
-  loadingText: {
-    color: '#a855f7',
-    marginTop: 12,
-    fontSize: 16,
-    fontWeight: '600',
-  },
-  buttonWrapper: {
-    marginBottom: 16,
-    borderRadius: 16,
-    overflow: 'hidden',
-    shadowColor: '#7c3aed',
-    shadowOffset: { width: 0, height: 8 },
-    shadowOpacity: 0.6,
-    shadowRadius: 12,
-    elevation: 10,
-  },
-  gradientButton: {
-    paddingVertical: 16,
-    paddingHorizontal: 32,
-    alignItems: 'center',
-    borderRadius: 16,
-  },
-  buttonText: {
-    color: '#fff',
-    fontSize: 18,
-    fontWeight: 'bold',
-    letterSpacing: 0.5,
-  },
-  signupButton: {
-    paddingVertical: 14,
-    alignItems: 'center',
-    backgroundColor: 'rgba(255, 255, 255, 0.1)',
-    borderRadius: 16,
-    borderWidth: 1,
-    borderColor: 'rgba(255, 255, 255, 0.2)',
-  },
-  signupText: {
-    color: '#e9d5ff',
-    fontSize: 15,
-  },
-  signupTextBold: {
-    fontWeight: 'bold',
-    color: '#a855f7',
-  },
-  particles: {
-    position: 'absolute',
-    width: '100%',
-    height: '100%',
-    zIndex: -1, // Ensure particles are behind interactive elements
-    pointerEvents: 'none', // Prevent particles from blocking clicks
-  },
-  particle: {
-    position: 'absolute',
-    backgroundColor: '#a855f7',
-    borderRadius: 100,
-  },
-});
+/* styles moved to ./login.styles */

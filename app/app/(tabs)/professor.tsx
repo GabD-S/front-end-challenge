@@ -1,6 +1,7 @@
 import React from 'react';
-import { View, Text, StyleSheet, SafeAreaView } from 'react-native';
+import { View, Text, SafeAreaView } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
+import styles from './professor.styles';
 
 export default function ProfessorScreen() {
   return (
@@ -15,9 +16,4 @@ export default function ProfessorScreen() {
   );
 }
 
-const styles = StyleSheet.create({
-  container: { flex: 1 },
-  center: { flex: 1, justifyContent: 'center', alignItems: 'center' },
-  title: { color: '#fff', fontSize: 22, fontWeight: 'bold', marginBottom: 6 },
-  subtitle: { color: '#c4b5fd', fontSize: 14 },
-});
+// styles moved to ./professor.styles

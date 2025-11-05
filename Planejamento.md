@@ -176,3 +176,8 @@ Objetivo: Permitir visualização detalhada e edição de uma aula.
 - [ ] Publicar com Expo (`npx expo publish`)
 - [ ] Atualizar este documento com os links do vídeo e do publish
 - [ ] Abrir Pull Request para o repositório original do desafio
+
+
+link para o figma 
+
+https://www.figma.com/design/9qOZZSKQJdc99dImkAMP6g/Untitled?node-id=0-1&t=h5FwO7E0tpzJjsUN-1

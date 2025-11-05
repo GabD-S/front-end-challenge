@@ -1,10 +1,11 @@
 import React, { useEffect, useState, useCallback } from 'react';
-import { View, Text, StyleSheet, FlatList, Pressable, ActivityIndicator, SafeAreaView, Alert } from 'react-native';
+import { View, Text, FlatList, Pressable, ActivityIndicator, SafeAreaView, Alert } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { BlurView } from 'expo-blur';
 import { Aula, getAulas, enrollInAula, unenrollFromAula, deleteAula } from '@/src/services/api';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useAuth } from '@/src/contexts/AuthContext';
+import styles from './aulas.styles';
 
 export default function AulasScreen() {
   const [aulas, setAulas] = useState<Aula[]>([]);
@@ -163,26 +164,4 @@ export default function AulasScreen() {
   );
 }
 
-const styles = StyleSheet.create({
-  container: { flex: 1 },
-  center: { flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#1f0a3f' },
-  headerRow: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: 16, paddingTop: 12 },
-  title: { color: '#f5f7fb', fontSize: 22, fontWeight: 'bold' },
-  back: { color: '#2dd4bf', fontWeight: 'bold' },
-  card: { borderRadius: 16, overflow: 'hidden', marginBottom: 14 },
-  cardInner: { padding: 16, borderWidth: 1, borderColor: 'rgba(45, 212, 191, 0.3)' },
-  rowBetween: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8 },
-  cardTitle: { color: '#fff', fontSize: 18, fontWeight: 'bold' },
-  badge: { paddingHorizontal: 10, paddingVertical: 4, borderRadius: 8 },
-  badgeOk: { backgroundColor: 'rgba(34,197,94,0.25)' },
-  badgeFull: { backgroundColor: 'rgba(239,68,68,0.25)' },
-  badgeText: { color: '#fff', fontWeight: 'bold', fontSize: 12 },
-  detail: { color: '#c7c9d3', fontSize: 13, marginBottom: 2 },
-  inscritos: { color: '#f5f7fb', fontSize: 12, marginTop: 6 },
-  actions: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginTop: 12 },
-  button: { borderRadius: 10, paddingHorizontal: 16, paddingVertical: 10 },
-  buttonPrimary: { backgroundColor: '#22c55e' },
-  buttonDisabled: { backgroundColor: 'rgba(255,255,255,0.15)' },
-  buttonText: { color: '#fff', fontWeight: 'bold' },
-  link: { color: '#2dd4bf', fontWeight: 'bold' },
-});
+// styles moved to ./aulas.styles
