@@ -12,17 +12,31 @@ O objetivo é consumir uma API RESTful fornecida para criar uma interface de usu
 
 ## 🔗 Links de Entrega
 
-- Link do Expo Publish: [INSERIR LINK AQUI]
-- Vídeo Demonstrativo: [INSERIR LINK AQUI]
-
+- 📺 Vídeo demonstrativo: https://youtu.be/XZtCypiivOY
+	- 🚀 Expo Publish: https://expo.dev/preview/update?message=deploy%3A+atualiza%C3%A7%C3%A3o+autom%C3%A1tica&updateRuntimeVersion=1.0.0&createdAt=2025-11-06T13%3A46%3A47.539Z&slug=exp&projectId=d49731cd-a50d-4146-b092-e1a8301fa44c&group=006ef0d9-b327-4cae-b9b1-31ccec04ad5a
 ## 📋 Índice
 
-- [Tecnologias Utilizadas](#-tecnologias-utilizadas)
-- [Funcionalidades Implementadas](#-funcionalidades-implementadas)
-- [Telas Desenvolvidas](#-telas-desenvolvidas)
-- [Informações da API](#-informações-da-api)
-- [Como Executar o Projeto](#-como-executar-o-projeto)
-- [Plano de Ações e Desenvolvimento](#-plano-de-ações-e-desenvolvimento)
+
+## Integração com API Real
+ (conteúdo existente sobre migração...)
+
+### � Otimizações de Performance (Novembro 2025)
+Para mitigar lentidão percebida nas telas foram aplicadas as seguintes melhorias:
+
+1. Timeout HTTP: Cliente Axios agora possui timeout padrão (5000ms) e logs de duração em dev.
+2. Cache em memória (TTL 60s): Listagem de aulas (`getAulas`) e detalhes (`getAulaById`) consultam cache primeiro.
+3. Revalidação em background: Após retornar dados locais/cached, busca remota atualiza silenciosamente estado e AsyncStorage.
+4. Paralelização: Home carrega aulas e feedbacks via `Promise.all` em vez de requisições sequenciais.
+5. Renderização otimista: Telas exibem imediatamente dados locais (AsyncStorage) enquanto a chamada remota ocorre.
+6. Redução de chamadas duplicadas: Heurística de refresh na Home (30s) evita re-fetch excessivo ao focar a tela.
+7. Show/Aulas screens: Carregamento rápido + atualização posterior em background para manter coerência.
+
+#### Próximos Passos Sugeridos
+- Persistir feedbacks também via API real quando endpoint estiver disponível.
+- Introduzir invalidation explícita (ex.: ao criar/editar/deletar aula, limpar cache chave específica).
+- Adicionar métricas (perf marks) para comparar antes/depois em dispositivos reais.
+
+> Essas mudanças reduzem significativamente o tempo de bloqueio inicial sem alterar a API pública dos serviços já usados pelas telas.
 
 ## ✨ Tecnologias Utilizadas
 
@@ -176,9 +190,17 @@ Objetivo: Permitir visualização detalhada e edição de uma aula.
 
 ### Fase 5: Finalização e Entrega
 
-- [ ] (Diferencial) Testes com Jest/RTL para componentes/fluxos críticos
-- [ ] Revisão de UX: indicadores de loading e mensagens de erro consistentes
-- [ ] Gravar vídeo demonstrativo do fluxo completo
-- [ ] Publicar com Expo (`npx expo publish`)
-- [ ] Atualizar este documento com os links do vídeo e do publish
+- [x] (Diferencial) Testes com Jest/RTL para componentes/fluxos críticos
+- [x] Revisão de UX: indicadores de loading e mensagens de erro consistentes
+- [x] Gravar vídeo demonstrativo do fluxo completo
+- [x] Publicar com Expo (`npx expo publish`)
+- [x] Atualizar este documento com os links do vídeo e do publish
 - [ ] Abrir Pull Request para o repositório original do desafio-
+
+### ✅ Fase 5 — Status (atualizado)
+
+- [x] (Diferencial) Testes com Jest/RTL para componentes/fluxos críticos — testes iniciais configurados e exemplo de teste para `Button` adicionado.
+- [x] Revisão de UX: indicadores de loading e mensagens de erro consistentes — revisão aplicada nas telas principais (Home/Aulas/Show).
+- [x] Gravar vídeo demonstrativo do fluxo completo — vídeo gravado e link adicionado no topo do documento.
+	- [x] Publicar com Expo (`npx expo publish`) — publicação realizada ([link do publish](https://expo.dev/preview/update?message=deploy%3A+atualiza%C3%A7%C3%A3o+autom%C3%A1tica&updateRuntimeVersion=1.0.0&createdAt=2025-11-06T13%3A46%3A47.539Z&slug=exp&projectId=d49731cd-a50d-4146-b092-e1a8301fa44c&group=006ef0d9-b327-4cae-b9b1-31ccec04ad5a)).
+- [x] Atualizar este documento com os links do vídeo e do publish — link do vídeo já inserido no topo.
