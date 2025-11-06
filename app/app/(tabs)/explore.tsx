@@ -1,112 +1,183 @@
-import { Image } from 'expo-image';
-import { Platform, StyleSheet } from 'react-native';
+import React, { useRef, useEffect } from 'react';
+import { View, Text, ScrollView, SafeAreaView, Animated, Pressable } from 'react-native';
+import { LinearGradient } from 'expo-linear-gradient';
+import { BlurView } from 'expo-blur';
+import styles from '@/src/styles/tabs/explore.styles';
 
-import { Collapsible } from '@/components/ui/collapsible';
-import { ExternalLink } from '@/components/external-link';
-import ParallaxScrollView from '@/components/parallax-scroll-view';
-import { ThemedText } from '@/components/themed-text';
-import { ThemedView } from '@/components/themed-view';
-import { IconSymbol } from '@/components/ui/icon-symbol';
-import { Fonts } from '@/constants/theme';
+export default function ExploreScreen() {
+  const fadeAnim = useRef(new Animated.Value(0)).current;
+  const slideAnim = useRef(new Animated.Value(30)).current;
 
-export default function TabTwoScreen() {
+  useEffect(() => {
+    Animated.parallel([
+      Animated.timing(fadeAnim, {
+        toValue: 1,
+        duration: 600,
+        useNativeDriver: true,
+      }),
+      Animated.timing(slideAnim, {
+        toValue: 0,
+        duration: 600,
+        useNativeDriver: true,
+      }),
+    ]).start();
+  }, []);
+
+  const features = [
+    { icon: '🏋️', title: 'Aulas Variadas', description: 'Mais de 20 tipos de aulas diferentes para todos os níveis' },
+    { icon: '👨‍🏫', title: 'Profissionais', description: 'Instrutores certificados e experientes' },
+    { icon: '📅', title: 'Horários Flexíveis', description: 'Aulas de manhã, tarde e noite' },
+    { icon: '⭐', title: 'Resultados Garantidos', description: 'Avaliação contínua e acompanhamento' },
+  ];
+
+  const stats = [
+    { number: '500+', label: 'Alunos Ativos' },
+    { number: '20+', label: 'Tipos de Aulas' },
+    { number: '95%', label: 'Taxa de Satisfação' },
+  ];
+
   return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#D0D0D0', dark: '#353636' }}
-      headerImage={
-        <IconSymbol
-          size={310}
-          color="#808080"
-          name="chevron.left.forwardslash.chevron.right"
-          style={styles.headerImage}
-        />
-      }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText
-          type="title"
-          style={{
-            fontFamily: Fonts.rounded,
-          }}>
-          Explore
-        </ThemedText>
-      </ThemedView>
-      <ThemedText>This app includes example code to help you get started.</ThemedText>
-      <Collapsible title="File-based routing">
-        <ThemedText>
-          This app has two screens:{' '}
-          <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> and{' '}
-          <ThemedText type="defaultSemiBold">app/(tabs)/explore.tsx</ThemedText>
-        </ThemedText>
-        <ThemedText>
-          The layout file in <ThemedText type="defaultSemiBold">app/(tabs)/_layout.tsx</ThemedText>{' '}
-          sets up the tab navigator.
-        </ThemedText>
-        <ExternalLink href="https://docs.expo.dev/router/introduction">
-          <ThemedText type="link">Learn more</ThemedText>
-        </ExternalLink>
-      </Collapsible>
-      <Collapsible title="Android, iOS, and web support">
-        <ThemedText>
-          You can open this project on Android, iOS, and the web. To open the web version, press{' '}
-          <ThemedText type="defaultSemiBold">w</ThemedText> in the terminal running this project.
-        </ThemedText>
-      </Collapsible>
-      <Collapsible title="Images">
-        <ThemedText>
-          For static images, you can use the <ThemedText type="defaultSemiBold">@2x</ThemedText> and{' '}
-          <ThemedText type="defaultSemiBold">@3x</ThemedText> suffixes to provide files for
-          different screen densities
-        </ThemedText>
-        <Image
-          source={require('@/assets/images/react-logo.png')}
-          style={{ width: 100, height: 100, alignSelf: 'center' }}
-        />
-        <ExternalLink href="https://reactnative.dev/docs/images">
-          <ThemedText type="link">Learn more</ThemedText>
-        </ExternalLink>
-      </Collapsible>
-      <Collapsible title="Light and dark mode components">
-        <ThemedText>
-          This template has light and dark mode support. The{' '}
-          <ThemedText type="defaultSemiBold">useColorScheme()</ThemedText> hook lets you inspect
-          what the user&apos;s current color scheme is, and so you can adjust UI colors accordingly.
-        </ThemedText>
-        <ExternalLink href="https://docs.expo.dev/develop/user-interface/color-themes/">
-          <ThemedText type="link">Learn more</ThemedText>
-        </ExternalLink>
-      </Collapsible>
-      <Collapsible title="Animations">
-        <ThemedText>
-          This template includes an example of an animated component. The{' '}
-          <ThemedText type="defaultSemiBold">components/HelloWave.tsx</ThemedText> component uses
-          the powerful{' '}
-          <ThemedText type="defaultSemiBold" style={{ fontFamily: Fonts.mono }}>
-            react-native-reanimated
-          </ThemedText>{' '}
-          library to create a waving hand animation.
-        </ThemedText>
-        {Platform.select({
-          ios: (
-            <ThemedText>
-              The <ThemedText type="defaultSemiBold">components/ParallaxScrollView.tsx</ThemedText>{' '}
-              component provides a parallax effect for the header image.
-            </ThemedText>
-          ),
-        })}
-      </Collapsible>
-    </ParallaxScrollView>
+    <LinearGradient
+      colors={['#0f0c29', '#1a1637', '#2d1b4e']}
+      start={{ x: 0, y: 0 }}
+      end={{ x: 1, y: 1 }}
+      style={styles.container}
+    >
+      <SafeAreaView style={{ flex: 1 }}>
+        <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: 20 }}>
+          {/* Header */}
+          <Animated.View
+            style={[
+              styles.header,
+              {
+                opacity: fadeAnim,
+                transform: [{ translateY: slideAnim }],
+              },
+            ]}
+          >
+            <Text style={styles.headerIcon}>🎯</Text>
+            <Text style={styles.headerTitle}>Conheça a Fit Dreams</Text>
+            <Text style={styles.headerSubtitle}>Academia de treinamento profissional</Text>
+          </Animated.View>
+
+          {/* Estatísticas */}
+          <Animated.View
+            style={[
+              styles.statsContainer,
+              {
+                opacity: fadeAnim,
+                transform: [{ translateY: slideAnim }],
+              },
+            ]}
+          >
+            {stats.map((stat, idx) => (
+              <BlurView intensity={40} key={idx} style={styles.statCard}>
+                <LinearGradient
+                  colors={['rgba(168, 85, 247, 0.25)', 'rgba(124, 58, 237, 0.15)']}
+                  style={styles.statGradient}
+                >
+                  <Text style={styles.statNumber}>{stat.number}</Text>
+                  <Text style={styles.statLabel}>{stat.label}</Text>
+                </LinearGradient>
+              </BlurView>
+            ))}
+          </Animated.View>
+
+          {/* Características */}
+          <Animated.View
+            style={[
+              {
+                opacity: fadeAnim,
+                transform: [{ translateY: slideAnim }],
+              },
+            ]}
+          >
+            <View style={styles.sectionHeader}>
+              <Text style={styles.sectionTitle}>✨ Por Que Escolher?</Text>
+            </View>
+
+            <View style={styles.featuresGrid}>
+              {features.map((feature, idx) => (
+                <Pressable
+                  key={idx}
+                  style={({ pressed }) => [
+                    styles.featureCard,
+                    { transform: [{ scale: pressed ? 0.95 : 1 }] },
+                  ]}
+                >
+                  <BlurView intensity={40} style={styles.featureBlur}>
+                    <LinearGradient
+                      colors={['rgba(168, 85, 247, 0.25)', 'rgba(124, 58, 237, 0.15)']}
+                      style={styles.featureGradient}
+                    >
+                      <Text style={styles.featureIcon}>{feature.icon}</Text>
+                      <Text style={styles.featureTitle}>{feature.title}</Text>
+                      <Text style={styles.featureDescription}>{feature.description}</Text>
+                    </LinearGradient>
+                  </BlurView>
+                </Pressable>
+              ))}
+            </View>
+          </Animated.View>
+
+          {/* Missão */}
+          <Animated.View
+            style={[
+              {
+                opacity: fadeAnim,
+                transform: [{ translateY: slideAnim }],
+              },
+            ]}
+          >
+            <BlurView intensity={50} style={styles.missionCard}>
+              <LinearGradient
+                colors={['rgba(168, 85, 247, 0.2)', 'rgba(124, 58, 237, 0.1)']}
+                style={styles.missionGradient}
+              >
+                <Text style={styles.missionIcon}>🚀</Text>
+                <Text style={styles.missionTitle}>Nossa Missão</Text>
+                <Text style={styles.missionText}>
+                  Transformar vidas através de programas de treinamento personalizados, oferecendo um ambiente acolhedor,
+                  profissional e motivador para todos os níveis de aptidão.
+                </Text>
+                <View style={styles.divider} />
+                <Text style={styles.valuesTitle}>Nossos Valores</Text>
+                <View style={styles.valuesList}>
+                  <Text style={styles.valueItem}>💪 Dedicação ao bem-estar</Text>
+                  <Text style={styles.valueItem}>🎯 Excelência em serviço</Text>
+                  <Text style={styles.valueItem}>🤝 Comunidade unida</Text>
+                  <Text style={styles.valueItem}>📈 Crescimento contínuo</Text>
+                </View>
+              </LinearGradient>
+            </BlurView>
+          </Animated.View>
+
+          {/* CTA */}
+          <Animated.View
+            style={[
+              styles.ctaContainer,
+              {
+                opacity: fadeAnim,
+                transform: [{ translateY: slideAnim }],
+              },
+            ]}
+          >
+            <BlurView intensity={50} style={styles.ctaCard}>
+              <LinearGradient
+                colors={['#a855f7', '#7c3aed']}
+                style={styles.ctaGradient}
+              >
+                <Text style={styles.ctaTitle}>Pronto para começar?</Text>
+                <Text style={styles.ctaSubtitle}>
+                  Junte-se a centenas de alunos satisfeitos e transforme sua vida
+                </Text>
+              </LinearGradient>
+            </BlurView>
+          </Animated.View>
+        </ScrollView>
+      </SafeAreaView>
+    </LinearGradient>
   );
 }
 
-const styles = StyleSheet.create({
-  headerImage: {
-    color: '#808080',
-    bottom: -90,
-    left: -35,
-    position: 'absolute',
-  },
-  titleContainer: {
-    flexDirection: 'row',
-    gap: 8,
-  },
-});
+// styles moved to ./explore.styles

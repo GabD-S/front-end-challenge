@@ -1,7 +1,8 @@
 {
   "expo": {
     "name": "app",
-    "slug": "app",
+    "slug": "frontchallenge",
+    "owner": "gabd-s",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -40,9 +41,20 @@
         }
       ]
     ],
+    "extra": {
+      "eas": {
+        "projectId": "d49731cd-a50d-4146-b092-e1a8301fa44c"
+      }
+    },
     "experiments": {
       "typedRoutes": true,
       "reactCompiler": true
+    },
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/d49731cd-a50d-4146-b092-e1a8301fa44c"
     }
   }
 }
