@@ -1,5 +1,11 @@
 # Switch Dreams Challenge — Fit Dreams App (React Native)
 
+**🔗 Link do vídeo demonstrativo:**
+https://youtu.be/XZtCypiivOY
+
+**🎨 Link do Figma:**
+https://www.figma.com/design/9qOZZSKQJdc99dImkAMP6g/Untitled?node-id=0-1&t=mdWwHVPKw7VHLQ1r-1
+
 Este repositório contém a solução para o desafio de frontend da Switch Dreams, focado no desenvolvimento de um aplicativo mobile para a academia Fit Dreams usando React Native e Expo.
 
 O objetivo é consumir uma API RESTful fornecida para criar uma interface de usuário funcional, intuitiva e de qualidade.
@@ -175,9 +181,4 @@ Objetivo: Permitir visualização detalhada e edição de uma aula.
 - [ ] Gravar vídeo demonstrativo do fluxo completo
 - [ ] Publicar com Expo (`npx expo publish`)
 - [ ] Atualizar este documento com os links do vídeo e do publish
-- [ ] Abrir Pull Request para o repositório original do desafio
-
-
-link para o figma 
-
-https://www.figma.com/design/9qOZZSKQJdc99dImkAMP6g/Untitled?node-id=0-1&t=h5FwO7E0tpzJjsUN-1
+- [ ] Abrir Pull Request para o repositório original do desafio-

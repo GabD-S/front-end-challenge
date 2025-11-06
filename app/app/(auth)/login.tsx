@@ -7,6 +7,7 @@ import Button from '@/src/components/Button';
 import { LinearGradient } from 'expo-linear-gradient';
 import { BlurView } from 'expo-blur';
 import styles from '@/src/styles/auth/login.styles';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const { width, height } = Dimensions.get('window');
 
@@ -91,6 +92,7 @@ export default function LoginScreen() {
       ])
     ).start();
   }, []);
+
 
   const handleLogin = async () => {
     setError('');

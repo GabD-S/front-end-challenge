@@ -17,4 +17,5 @@ export default function Index() {
   // If logged in, land on Aulas; otherwise go to Login
   if (token) return <Redirect href="/aulas" />;
   return <Redirect href="/login" />;
+  
 }
