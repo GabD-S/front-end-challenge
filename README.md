@@ -1,68 +1,53 @@
-# Switch Dreams Challenge
 
-O desafio proposto visa avaliar suas habilidades com o React Native, sendo isso parte do processo seletivo para vaga de desenvolvedor frontend da Switch Dreams.
+# Switch Dreams Challenge — Fit Dreams App
 
-Esperamos que você tenha uma boa noção nos seguintes tópicos:
+## Descrição do Problema
 
-- HTTP e estrutura básica da web
-- Linguagem de programação Javascript
-- Framework React Native
-- Ferramenta [Expo](https://docs.expo.dev/)
-- Consumo de API
+A academia Fit Dreams possui uma grande versatilidade de aulas em seu cronograma, sendo que as atividades variam a cada mês. Você foi contratado para desenvolver o frontend de um sistema que organizará a disponibilidade de cada aula, consumindo uma API RESTful para criar uma interface funcional e intuitiva em React Native.
 
-Além disso é sempre interessante estar atento aos padrões usuais de qualidade de código.
-
-## Problema
-
-A academia Fit Dreams possui uma grande versatilidade de aulas em seu cronograma, sendo que as atividades variam a cada mês. A Fit Dreams acaba de te contratar para desenvolver o frontend de um sistema que organizará a disponibilidade de cada aula. 
-
-As informações das aulas estão disponíveis na API informada via email, assim como seus respectivos endpoints. A partir da API fornecida, deve-se desenvolver em React Native as telas:
-
-- Cadastro de usuário
-- Login 
-- Index de aulas disponíveis
-- Show da aula
-- Edit da aula
-
-Cada aula contém as informações:
-
+Cada aula contém:
 - Nome da aula
 - Nome do professor
 - Horário
 - Dias da semana
-- Imagem de capa da aula
+- Imagem de capa
 - Descrição
 
-## API
-Para obter as informações que utilizará no aplicativo utilize a API fornecida:
+## Como instalar e executar
 
-API: https://gym.switchdreams.com.br/
+Pré‑requisitos:
+- Node.js (LTS)
+- App Expo Go instalado no dispositivo móvel (iOS/Android)
 
-[:memo: Docs](https://documenter.getpostman.com/view/12265896/Uz59MeAK#57d01a84-2799-4754-a891-7f08936f2a5e)
+Passos:
+1. Clone o repositório (após fazer o fork):
+	```bash
+	git clone <URL-DO-SEU-FORK>
+	cd front-end-challenge
+	```
+2. Instale as dependências:
+	```bash
+	npm install
+	# ou
+	yarn
+	# ou
+	pnpm install
+	```
+3. Inicie o servidor de desenvolvimento do Expo:
+	```bash
+	npx expo start
+	```
+4. Acesse o aplicativo:
+	- Escaneie o QR Code no terminal com o app Expo Go (iOS/Android)
+	- Ou pressione `w` no terminal para abrir no emulador web
 
-## Requisitos
+## Links Relevantes
 
-Para iniciar o desafio, crie um fork a partir do presente repositório e inicie seu projeto react native nele. Altere o readme com todas as informações que julgar pertinente para o desafio. Para entregar a sua implementação você deve criar uma PR e inserir no readme um link de um vídeo demonstrativo de todas as telas e do fluxo criado para o projeto.
+- [Vídeo demonstrativo](https://youtu.be/XZtCypiivOY)
+- [Figma do protótipo](https://www.figma.com/design/9qOZZSKQJdc99dImkAMP6g/Untitled?node-id=0-1&t=mdWwHVPKw7VHLQ1r-1)
+- [Expo Publish](https://expo.dev/preview/update?message=deploy%3A+atualiza%C3%A7%C3%A3o+autom%C3%A1tica&updateRuntimeVersion=1.0.0&createdAt=2025-11-06T13%3A46%3A47.539Z&slug=exp&projectId=d49731cd-a50d-4146-b092-e1a8301fa44c&group=006ef0d9-b327-4cae-b9b1-31ccec04ad5a)
+- [API Base](https://gym.switchdreams.com.br/)
+- [Documentação da API (Postman)](https://documenter.getpostman.com/view/12265896/Uz59MeAK#57d01a84-2799-4754-a891-7f08936f2a5e)
 
-
-## Avaliação
-
-Avaliaremos as seguintes habilidades
-
-- Nível de conhecimento em Javascript
-- Nível de conhecimento em React Native
-- Nível de conhecimento em consumo de APIs
-- Qualidade do código
-- Utilização do github
-
-## Entrega
-Deve-se fazer uma [Publish](https://docs.expo.dev/workflow/publishing/#how-to-publish) através do Expo para que o aplicativo seja mais facilmente testado, além de deixar o link no readme de um vídeo demonstrando o aplicativo.
-
-## Diferenciais
-- Testes automatizados (para os testes recomenda-se o uso do Jest)
-- Linter
-- Prototipação das telas no Figma
-
-## Observações
-Ao enviar o desafio você declara que a solução implementada foi 100% feita por você, sem violar nenhuma licença de software de terceiros.
+Para detalhes completos do desenvolvimento, funcionalidades, plano de ações e checklist, acesse o arquivo [Planejamento.md](./Planejamento.md).
 
