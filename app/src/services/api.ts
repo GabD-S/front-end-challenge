@@ -117,7 +117,7 @@ export async function getAulas(): Promise<Aula[]> {
       AsyncStorage.setItem(AULAS_KEY, JSON.stringify(mapped)).catch(() => {});
     })
     .catch(() => {
-      // mantém localParsed no cache
+  // mantém localParsed no cache
     });
 
   return localParsed;
@@ -264,7 +264,7 @@ export async function enrollInAula(aulaId: string, userEmail: string): Promise<A
   const aula = aulas[idx];
   const inscritos = new Set(aula.inscritos ?? []);
   if (inscritos.has(userEmail)) {
-    // Já inscrito: retorna sem alterar vagas
+  // Já inscrito: retorna sem alterar vagas
     return aula;
   }
   const vagasRestantes = typeof aula.vagas === 'number' ? aula.vagas : 0;

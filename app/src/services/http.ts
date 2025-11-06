@@ -1,7 +1,7 @@
+
 import axios from 'axios';
 
 const BASE_URL = (process.env.EXPO_PUBLIC_API_URL || 'https://gym.switchdreams.com.br/api').trim();
-
 const DEFAULT_TIMEOUT = Number(process.env.EXPO_PUBLIC_API_TIMEOUT_MS || 5000);
 
 export const api = axios.create({
@@ -10,8 +10,9 @@ export const api = axios.create({
   timeout: DEFAULT_TIMEOUT,
 });
 
-// Optional: basic logging to help diagnose slow requests in dev
+// Log de duração das requisições em desenvolvimento
 api.interceptors.request.use((config) => {
+  // Marca o início da requisição
   // @ts-ignore
   config.metadata = { start: Date.now() };
   return config;
@@ -22,8 +23,7 @@ api.interceptors.response.use(
     const start = (response.config as any)?.metadata?.start as number | undefined;
     if (start && __DEV__) {
       const dur = Date.now() - start;
-      // eslint-disable-next-line no-console
-      console.log(`[API] ${response.config.method?.toUpperCase()} ${response.config.url} -> ${response.status} in ${dur}ms`);
+      console.log(`[API] ${response.config.method?.toUpperCase()} ${response.config.url} -> ${response.status} em ${dur}ms`);
     }
     return response;
   },
@@ -32,8 +32,7 @@ api.interceptors.response.use(
     const start = (cfg as any)?.metadata?.start as number | undefined;
     if (start && __DEV__) {
       const dur = Date.now() - start;
-      // eslint-disable-next-line no-console
-      console.warn(`[API] ${cfg.method?.toUpperCase?.()} ${cfg.url} failed in ${dur}ms:`, error.message);
+      console.warn(`[API] ${cfg.method?.toUpperCase?.()} ${cfg.url} falhou em ${dur}ms:`, error.message);
     }
     return Promise.reject(error);
   }

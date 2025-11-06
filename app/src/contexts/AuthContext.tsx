@@ -32,7 +32,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [loading, setLoading] = useState(true);
   const [signing, setSigning] = useState(false);
 
-  // Bootstraps auth state from storage
+  // Inicializa estado de autenticação a partir do armazenamento
   useEffect(() => {
     (async () => {
       try {
@@ -65,11 +65,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const signIn = useCallback(async (payload: SignInPayload) => {
     setSigning(true);
     try {
-      // Real API login
+  // Login pela API real
       const res = await apiLogin(payload.email, payload.password);
       await persistAuth({ token: res.token, user: { id: String(res.user.id), email: res.user.email, role: res.user.role } });
     } catch (err) {
-      // Fallback para mock local caso backend indisponível
+  // Fallback para mock local caso backend indisponível
       try {
         const mock = await signInRequest(payload);
         await persistAuth(mock);
@@ -84,12 +84,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const signUp = useCallback(async (payload: SignUpPayload) => {
     setSigning(true);
     try {
-      // Real API create user then login
+  // Cria usuário na API real e faz login
       await apiCreateUser(payload.email, payload.password, payload.role === 'professor' ? 'teacher' : payload.role === 'usuario' ? 'customer' : 'admin');
       const res = await apiLogin(payload.email, payload.password);
       await persistAuth({ token: res.token, user: { id: String(res.user.id), email: res.user.email, role: res.user.role } });
     } catch (err) {
-      // Fallback para mock
+  // Fallback para mock local
       const mock = await signUpRequest(payload);
       await persistAuth(mock);
     } finally {
