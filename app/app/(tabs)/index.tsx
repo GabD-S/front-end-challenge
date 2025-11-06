@@ -35,23 +35,38 @@ export default function IndexScreen() {
   const slideAnim = useRef(new Animated.Value(-50)).current;
 
   const loadData = useCallback(async () => {
-    const data = await getAulasAPI();
+    // Carrega aulas e feedbacks em paralelo
+    const [data, fbs] = await Promise.all([
+      getAulasAPI(),
+      getFeedbacks(),
+    ]);
     setAulas(data);
-    const fbs = await getFeedbacks();
     setUserFeedbacks(fbs);
   }, []);
 
   useEffect(() => {
     (async () => {
+      // Primeiro retorno rápido: aulas locais já vêm da função (cache-first)
       await loadData();
       setLoading(false);
+      // Revalidação forçada em background para atualizar caso haja dados novos
+      getAulasAPI().then(fresh => {
+        setAulas(fresh);
+      }).catch(() => {});
     })();
   }, [loadData]);
 
   useFocusEffect(
     useCallback(() => {
-      // Recarrega quando a Home entra em foco
-      loadData();
+      // Atualiza silenciosamente somente se cache expirou (simples heurística baseada em horário)
+      const now = Date.now();
+      // @ts-ignore attach last refresh on ref
+      const last = (globalThis as any).__homeLastRefresh || 0;
+      if (now - last > 30_000) { // 30s
+        loadData();
+        // @ts-ignore
+        (globalThis as any).__homeLastRefresh = now;
+      }
       return () => {};
     }, [loadData])
   );

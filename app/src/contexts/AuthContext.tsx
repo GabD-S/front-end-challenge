@@ -1,5 +1,7 @@
 import React, { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { login as apiLogin, createUser as apiCreateUser } from '@/src/services/auth.api';
+import { setToken as setHttpToken } from '@/src/services/http';
 import {
   AuthResponse,
   SignInPayload,
@@ -40,6 +42,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         ]);
         if (storedToken) {
           setToken(storedToken);
+          setHttpToken(storedToken);
         }
         if (storedUser) {
           setUser(JSON.parse(storedUser));
@@ -62,8 +65,17 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const signIn = useCallback(async (payload: SignInPayload) => {
     setSigning(true);
     try {
-      const res = await signInRequest(payload);
-      await persistAuth(res);
+      // Real API login
+      const res = await apiLogin(payload.email, payload.password);
+      await persistAuth({ token: res.token, user: { id: String(res.user.id), email: res.user.email, role: res.user.role } });
+    } catch (err) {
+      // Fallback para mock local caso backend indisponível
+      try {
+        const mock = await signInRequest(payload);
+        await persistAuth(mock);
+      } catch (e2) {
+        throw err;
+      }
     } finally {
       setSigning(false);
     }
@@ -72,8 +84,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const signUp = useCallback(async (payload: SignUpPayload) => {
     setSigning(true);
     try {
-      const res = await signUpRequest(payload);
-      await persistAuth(res);
+      // Real API create user then login
+      await apiCreateUser(payload.email, payload.password, payload.role === 'professor' ? 'teacher' : payload.role === 'usuario' ? 'customer' : 'admin');
+      const res = await apiLogin(payload.email, payload.password);
+      await persistAuth({ token: res.token, user: { id: String(res.user.id), email: res.user.email, role: res.user.role } });
+    } catch (err) {
+      // Fallback para mock
+      const mock = await signUpRequest(payload);
+      await persistAuth(mock);
     } finally {
       setSigning(false);
     }
@@ -83,6 +101,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     setToken(null);
     setUser(null);
     await AsyncStorage.multiRemove([TOKEN_KEY, USER_KEY]);
+    setHttpToken(null);
   }, []);
 
   const value = useMemo<AuthContextData>(() => ({

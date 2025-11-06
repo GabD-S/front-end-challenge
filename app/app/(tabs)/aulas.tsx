@@ -18,10 +18,16 @@ export default function AulasScreen() {
 
   const load = useCallback(async () => {
     setLoading(true);
+    // Carrega rápido do cache/local e deixa a revalidação para o serviço
     const data = await getAulas();
     const filtered = categoriaParam ? data.filter(a => (a.categoria || '').toLowerCase() === categoriaParam.toLowerCase()) : data;
     setAulas(filtered);
     setLoading(false);
+    // Atualiza em background, caso haja mudanças
+    getAulas().then(next => {
+      const filteredNext = categoriaParam ? next.filter(a => (a.categoria || '').toLowerCase() === categoriaParam.toLowerCase()) : next;
+      setAulas(filteredNext);
+    }).catch(() => {});
   }, [categoriaParam]);
 
   useEffect(() => { load(); }, [load]);

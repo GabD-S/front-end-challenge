@@ -20,9 +20,14 @@ export default function ShowScreen() {
   useEffect(() => {
     (async () => {
       setLoading(true);
+      // Carrega rápido do cache/local; serviço fará revalidação em background
       const found = await getAulaById(String(id));
       setAula(found || null);
       setLoading(false);
+      // Atualiza em background para garantir dados mais novos
+      getAulaById(String(id)).then(fresh => {
+        if (fresh) setAula(fresh);
+      }).catch(() => {});
     })();
   }, [id]);
 

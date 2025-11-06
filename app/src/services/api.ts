@@ -58,25 +58,73 @@ const MOCK_AULAS: Aula[] = [
   },
 ];
 
+// Cache em memória para respostas rápidas entre telas
+type CacheEntry<T> = { value: T; timestamp: number };
+const memoryCache: Record<string, CacheEntry<any>> = {};
+const CACHE_TTL_MS = 60_000; // 60s
+
+function cacheGet<T>(key: string, ttl = CACHE_TTL_MS): T | undefined {
+  const hit = memoryCache[key];
+  if (!hit) return undefined;
+  if (Date.now() - hit.timestamp > ttl) {
+    delete memoryCache[key];
+    return undefined;
+  }
+  return hit.value as T;
+}
+
+function cacheSet<T>(key: string, value: T) {
+  memoryCache[key] = { value, timestamp: Date.now() };
+}
+
 export async function getAulas(): Promise<Aula[]> {
+  const cacheKey = 'aulas:list';
+  const cached = cacheGet<Aula[]>(cacheKey);
+  if (cached) return cached;
+
+  // Busca local imediata (AsyncStorage) para retorno rápido
   let aulasRaw = await AsyncStorage.getItem(AULAS_KEY);
   if (!aulasRaw) {
-    // Primeira execução: salva mock
     await AsyncStorage.setItem(AULAS_KEY, JSON.stringify(MOCK_AULAS));
     aulasRaw = JSON.stringify(MOCK_AULAS);
   }
-  const parsed: Aula[] = JSON.parse(aulasRaw);
-  // Garante defaults para novos campos
-  return parsed.map((a) => ({
+  const localParsed: Aula[] = JSON.parse(aulasRaw).map((a: Aula) => ({
     ...a,
     categoria: a.categoria || inferCategoria(a.nome),
     nivel: a.nivel || 'Todos os níveis',
     inscritos: Array.isArray(a.inscritos) ? a.inscritos : [],
     vagas: typeof a.vagas === 'number' ? a.vagas : 10,
   }));
+  cacheSet(cacheKey, localParsed);
+
+  // Revalidação em background (não bloqueia a UI)
+  listClasses()
+    .then((remote) => {
+      const mapped = remote.map(gc => ({
+        id: String(gc.id),
+        nome: gc.name,
+        professor: gc.teacher_name || 'Professor',
+        horario: gc.start_time || '08:00 - 09:00',
+        dias: [],
+        descricao: gc.description || '',
+        imagem: '',
+        categoria: inferCategoria(gc.name),
+        nivel: 'Todos os níveis',
+        vagas: 10,
+        inscritos: [],
+      }));
+      cacheSet(cacheKey, mapped);
+      AsyncStorage.setItem(AULAS_KEY, JSON.stringify(mapped)).catch(() => {});
+    })
+    .catch(() => {
+      // mantém localParsed no cache
+    });
+
+  return localParsed;
 }
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { listClasses, showClass, createClass, deleteClass as remoteDelete } from '@/src/services/classes.api';
 
 // Chave para armazenar usuários
 const USERS_KEY = 'MOCK_USERS';
@@ -176,8 +224,35 @@ async function setAulas(aulas: Aula[]) {
 
 // Busca aula por ID
 export async function getAulaById(id: string): Promise<Aula | undefined> {
-  const aulas = await getAulas();
-  return aulas.find((a) => a.id === id);
+  // 1) Primeiro, tenta cache em memória/dados locais
+  const listCached = cacheGet<Aula[]>('aulas:list');
+  if (listCached) {
+    const hit = listCached.find(a => a.id === id);
+    if (hit) return hit;
+  }
+  const local = (await getAulas()).find(a => a.id === id);
+  if (local) return local;
+
+  // 2) Tenta remoto (não bloqueia outras telas, mas aqui precisamos do retorno)
+  try {
+    const gc = await showClass(Number(id));
+    const aula: Aula = {
+      id: String(gc.id),
+      nome: gc.name,
+      professor: gc.teacher_name || 'Professor',
+      horario: gc.start_time || '08:00 - 09:00',
+      dias: [],
+      descricao: gc.description || '',
+      imagem: '',
+      categoria: inferCategoria(gc.name),
+      nivel: 'Todos os níveis',
+      vagas: 10,
+      inscritos: [],
+    };
+    return aula;
+  } catch {
+    return undefined;
+  }
 }
 
 // Inscreve um usuário (email) na aula, respeitando limite de vagas e evitando duplicidade
@@ -227,9 +302,13 @@ export async function unenrollFromAula(aulaId: string, userEmail: string): Promi
 
 // Remove uma aula por ID (admin/professor)
 export async function deleteAula(aulaId: string): Promise<void> {
-  const aulas = await getAulas();
-  const filtered = aulas.filter(a => a.id !== aulaId);
-  await setAulas(filtered);
+  try {
+    await remoteDelete(Number(aulaId));
+  } catch {
+    const aulas = await getAulas();
+    const filtered = aulas.filter(a => a.id !== aulaId);
+    await setAulas(filtered);
+  }
 }
 
 // Cria uma nova aula (admin/professor)
@@ -246,22 +325,44 @@ export type CreateAulaPayload = {
 };
 
 export async function createAula(payload: CreateAulaPayload): Promise<Aula> {
-  const aulas = await getAulas();
-  const nova: Aula = {
-    id: Math.random().toString(36).slice(2),
-    nome: payload.nome,
-    professor: payload.professor,
-    horario: payload.horario,
-    dias: Array.isArray(payload.dias) ? payload.dias : [],
-    descricao: payload.descricao,
-    imagem: payload.imagem || '',
-    categoria: payload.categoria || inferCategoria(payload.nome),
-    nivel: payload.nivel || 'Todos os níveis',
-    vagas: typeof payload.vagas === 'number' ? payload.vagas : 10,
-    inscritos: [],
-  };
-  await setAulas([...aulas, nova]);
-  return nova;
+  try {
+    const created = await createClass({
+      name: payload.nome,
+      description: payload.descricao,
+      teacher_name: payload.professor,
+      start_time: payload.horario.split(' - ')[0],
+    });
+    return {
+      id: String(created.id),
+      nome: created.name,
+      professor: created.teacher_name || payload.professor,
+      horario: payload.horario,
+      dias: payload.dias,
+      descricao: created.description || payload.descricao,
+      imagem: payload.imagem || '',
+      categoria: payload.categoria || inferCategoria(created.name),
+      nivel: payload.nivel || 'Todos os níveis',
+      vagas: typeof payload.vagas === 'number' ? payload.vagas : 10,
+      inscritos: [],
+    };
+  } catch {
+    const aulas = await getAulas();
+    const nova: Aula = {
+      id: Math.random().toString(36).slice(2),
+      nome: payload.nome,
+      professor: payload.professor,
+      horario: payload.horario,
+      dias: Array.isArray(payload.dias) ? payload.dias : [],
+      descricao: payload.descricao,
+      imagem: payload.imagem || '',
+      categoria: payload.categoria || inferCategoria(payload.nome),
+      nivel: payload.nivel || 'Todos os níveis',
+      vagas: typeof payload.vagas === 'number' ? payload.vagas : 10,
+      inscritos: [],
+    };
+    await setAulas([...aulas, nova]);
+    return nova;
+  }
 }
 
 // Mock: Login local
